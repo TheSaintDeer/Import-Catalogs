@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
 
 class AttributeName(models.Model):
@@ -39,6 +40,9 @@ class Attribute(models.Model):
         on_delete=models.CASCADE
     )
 
+    def __str__(self) -> str:
+        return f'{self.nazev_atributu_id.nazev}: {self.hodnota_atributu_id.hodnota}'
+
 
 class Product(models.Model):
     '''Product provided in certain catalogs'''
@@ -50,21 +54,27 @@ class Product(models.Model):
     mena = models.CharField(
         max_length=3
     )
-    published_on = models.DateTimeField()
+    published_on = models.DateTimeField(
+        blank=True,
+        null=True
+    )
     is_published = models.BooleanField(
         default=False,
     )
     attributes = models.ManyToManyField(
         'Attribute',
-        through='ProductAttribute'
+        through='ProductAttributes'
     )
     images = models.ManyToManyField(
         'Image',
         through='ProductImage'
     )
 
+    def __str__(self) -> str:
+        return f'{self.nazev}'
 
-class ProductAttribute(models.Model):
+
+class ProductAttributes(models.Model):
     '''Model for many-to-many relationship between Product and Attribute tables'''
     attribute = models.ForeignKey(
         'Attribute',
@@ -78,7 +88,19 @@ class ProductAttribute(models.Model):
 
 class Image(models.Model):
     '''Model for storing a reference to an image'''
-    obrazek = models.URLField()
+    obrazek = models.URLField(
+        validators=[
+            RegexValidator(
+                #the link must start with 'https://' and end with '.jpg' and contain at least one character
+                regex=r'^https:\/\/.+\.jpg$', 
+                message="Please enter a valid image link.",
+                code="invalid_link",
+            ),
+        ],
+    )
+
+    def __str__(self) -> str:
+        return f'{self.obrazek}'
 
 
 class ProductImage(models.Model):

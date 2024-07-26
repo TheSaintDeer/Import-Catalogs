@@ -31,10 +31,10 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProductAttributeSerializer(serializers.ModelSerializer):
+class ProductAttributesSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = models.ProductAttribute
+        model = models.ProductAttributes
         fields = '__all__'
 
 

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # Third-part apps
 
     'rest_framework',
+    'rangefilter',
 
     # local apps
 
