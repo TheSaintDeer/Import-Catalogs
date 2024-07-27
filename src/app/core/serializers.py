@@ -7,7 +7,7 @@ class AttributeNameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.AttributeName
-        fields = ('id', 'nazev', 'kod', 'zobrazit')
+        fields = '__all__'
 
 
 class AttributeValueSerializer(serializers.ModelSerializer):

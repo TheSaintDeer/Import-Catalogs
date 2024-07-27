@@ -1,9 +1,12 @@
+import logging
 from rest_framework import status
 from django.db.models import Model
 from rest_framework.serializers import ModelSerializer
 
 from core import serializers
 
+
+logger = logging.getLogger('main')
 
 # depending on the key return the serializer type
 group_to_serializer = {
@@ -19,9 +22,12 @@ group_to_serializer = {
 
 def mode_handler(data: dict|list) -> tuple[dict, int]:
     '''Select the mode in which to process the post request'''
+
     if type(data) == dict:
+        logger.info('Importing data in single mode')
         return sigle_object_mode(data)
     elif type(data) == list:
+        logger.info('Importing data in multi mode')
         return multi_object_mode(data)
 
 def sigle_object_mode(data: dict) -> tuple[dict, int]:
@@ -86,6 +92,7 @@ def update_or_create_object(serializer: ModelSerializer,
 
 
 def get_serializer(model_name: str) -> ModelSerializer:
+    '''Take the desired serializer from the list of all serializers'''
     try:
         return group_to_serializer[model_name]
     except:

@@ -20,5 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('drf-auth/', include('rest_framework.urls')),
-    path('', include('importing.urls', namespace='importing')),
+    path('import/', include('importing.urls', namespace='importing')),
+    path('detail/', include('detail.urls', namespace='detail')),
 ]

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     'core',
     'importing',
+    'detail',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,38 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "formatters": {
+        "console": {
+            "format": "{levelname} {asctime} {module} {filename} {message}",
+            "style": "{",
+        },
+    },
+
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": 'console'
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "formatter": 'console',
+            "filename": 'logging.log'
+        },
+    },
+
+    "loggers": {
+        'main': {
+            "handlers": ["console", 'file'],
+            "level": "INFO",
+            'propagate': True
+        }
+    },
+}
 
 ROOT_URLCONF = 'app.urls'
 
