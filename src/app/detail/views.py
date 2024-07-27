@@ -13,6 +13,8 @@ logger = logging.getLogger('main')
 class DetailList(APIView):
 
     def get(self, request, model_name):
+        '''Endpoint for getting a list of all elements from a specific table'''
+
         logger.info(f'Open list of {model_name}')
         serializer = services.get_serializer(model_name)
         if not serializer:
@@ -27,6 +29,8 @@ class DetailList(APIView):
 class DetailRetrieve(APIView):
 
     def get(self, request, model_name, pk):
+        '''Endpoint for taking an element from a specific table'''
+
         logger.info(f'Open detail of object from {model_name} model')
         serializer = services.get_serializer(model_name)
         if not serializer:

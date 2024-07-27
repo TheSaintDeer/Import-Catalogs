@@ -1,9 +1,10 @@
+from typing import Union
 import logging
 from rest_framework import status
 from django.db.models import Model
 from rest_framework.serializers import ModelSerializer
 
-from core import serializers
+from . import serializers
 
 
 logger = logging.getLogger('main')
@@ -20,7 +21,7 @@ group_to_serializer = {
     'Catalog': serializers.CatalogSerializer,
 }
 
-def mode_handler(data: dict|list) -> tuple[dict, int]:
+def mode_handler(data: Union[dict, list]) -> tuple[dict, int]:
     '''Select the mode in which to process the post request'''
 
     if type(data) == dict:
@@ -63,7 +64,7 @@ def get_key_and_value_from_dict(data: dict) -> tuple[str, dict]:
     key = list(data.keys())[0]
     return key, data[key]
 
-def get_object_or_none(model: Model, id: int) -> Model|None:
+def get_object_or_none(model: Model, id: int) -> Union[Model, None]:
     '''Find an object in the tablipo by its ID'''
     try:
         return model.objects.get(id=id)
@@ -71,7 +72,7 @@ def get_object_or_none(model: Model, id: int) -> Model|None:
         return None
     
 def update_or_create_object(serializer: ModelSerializer,
-                            object: Model|None,
+                            object: Union[Model, None],
                             value: dict) -> tuple[dict, int]:
     '''Updates an object's data if it exists or creates a new entry in a table'''
     instance = None
