@@ -5,7 +5,6 @@ from rest_framework.serializers import ModelSerializer
 from core import serializers
 
 
-
 # depending on the key return the serializer type
 group_to_serializer = {
     'AttributeName': serializers.AttributeNameSerializer,
@@ -29,10 +28,14 @@ def sigle_object_mode(data: dict) -> tuple[dict, int]:
     '''Handler if only one object is submitted in a post request'''
     
     key, value = get_key_and_value_from_dict(data)
-    serializer = group_to_serializer[key]
 
     if not 'id' in value:
         return f"Object {str(data)} has not id", status.HTTP_400_BAD_REQUEST
+
+    serializer = get_serializer(key)
+    if not serializer:
+        return f"Unknown model type: {key}", status.HTTP_400_BAD_REQUEST
+    
     object = get_object_or_none(serializer.Meta.model, id=value['id'])
     
     return update_or_create_object(serializer, object, value)
@@ -80,3 +83,10 @@ def update_or_create_object(serializer: ModelSerializer,
         instance.save()
         return instance.data, status_code
     return instance.errors, status.HTTP_400_BAD_REQUEST
+
+
+def get_serializer(model_name: str) -> ModelSerializer:
+    try:
+        return group_to_serializer[model_name]
+    except:
+        return None

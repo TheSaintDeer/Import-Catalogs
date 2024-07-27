@@ -7,11 +7,6 @@ from rangefilter.filters import (
 from . import models
 
 
-class PriceRangeListFilter(admin.SimpleListFilter):
-    title = 'cena'
-    parameter_name = 'cena'
-
-
 @admin.register(models.AttributeName)
 class AttributeNameAdmin(admin.ModelAdmin):
     resource_class = models.AttributeName
