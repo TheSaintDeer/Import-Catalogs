@@ -19,8 +19,6 @@ Data reception works in two modes. If the input is a single json object or a lis
 - `docker-compose up --build`
 
 ### Local run
-- `git clone https://github.com/TheSaintDeer/Import-Catalogs.git `
-
 Create a virtual environment
 - `python3 -m venv env`
 - `source env/bin/activate`
