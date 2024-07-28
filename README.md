@@ -28,4 +28,4 @@ Install all packages
 - `pip install -r requirements.txt`
 
 Run project
-- `sh start.sh`
+- `./start.sh`
