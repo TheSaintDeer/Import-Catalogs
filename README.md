@@ -28,4 +28,7 @@ Install all packages
 - `pip install -r requirements.txt`
 
 Run project
-- `./start.sh`
+- `cd app/`
+- `python manage.py makemigrations`
+- `python manage.py migrate`
+- `python manage.py runserver`
